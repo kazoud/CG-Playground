@@ -169,8 +169,35 @@ class vec4{
     
 public:
     vec4(double a, double b, double c, double d) : x(a), y(b), z(c), w(d) {}
+    double getX() const
+    {
+        return x;
+    }
+    
+    double getY() const
+    {
+        return y;
+    }
+    
+    double getZ() const
+    {
+        return z;
+    }
+    
+    double getW() const
+    {
+        return w;
+    }
+    
+    friend std::ostream& operator <<(std::ostream& out, const vec4& vec);
     
 };
+
+std::ostream& operator <<(std::ostream& out, const vec4& vec)
+{
+    out << "[" << vec.getX() << ", " << vec.getY() << ", " << vec.getZ() <<  ", " << vec.getW() << ']';
+    return out;
+}
 
 struct hit_record{
     bool hit;

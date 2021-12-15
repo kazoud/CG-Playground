@@ -10,17 +10,20 @@
 #define mat_h
 
 class mat4{
-    double m[4][4] = {0};
+    double m[16] = {0};
     
 public:
     mat4(double arr[16])
     {
         for (int i = 0; i < 16; i++)
         {
-            int j = i/4;
-            int k = i%4;
-            m[j][k] = arr[i];
+            m[i] = arr[i];
         }
+    }
+    
+    double& operator ()(int i, int j) //Not finished
+    {
+        return m[4*i + j];
     }
     
     mat4(const mat4& mat)
@@ -29,16 +32,39 @@ public:
         {
             for(int j = 0; j < 4; j++)
             {
-                m[i][j] = mat[i][j];
+                m[i] = mat.m[i];
             }
         }
     }
     
-    double& operator ()(int i, int j) //Not finished
-    {
-        return m[i][j];
-    }
+    friend std::ostream& operator <<(std::ostream& out, const mat4& m);
     
 };
+
+std::ostream& operator <<(std::ostream& out, const mat4& mat)
+{
+    
+    for (int i = 0; i < 16; i++)
+    {
+        if (i%4 == 0)
+        {
+            out << std::endl << '[';
+        }
+        
+        out << mat.m[i];
+        
+        if (i%4 != 3)
+        {
+            out << ",";
+        }
+        
+        if (i%4 == 3)
+        {
+            out << ']';
+        }
+    }
+    out << std::endl;
+    return out;
+}
 
 #endif /* mat_h */

@@ -10,13 +10,19 @@
 #include "ray.h"
 #include "sphere.h"
 #include "plane.h"
+#include "mat.h"
 
 int main() {
     
-    vec3 x(2,0,0);
-    vec3 y(0,3,0);
+    double a[16];
+    for (int i = 0; i < 16; i++)
+    {
+        a[i] = rand() % 100;
+    }
     
-    std::cout << cross(x, y) << std::endl;
+    mat4 m(a);
+    
+    std::cout << m << std::endl;
     
     return 0;
 }
