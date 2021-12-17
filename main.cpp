@@ -14,6 +14,8 @@
 
 int main() {
     
+     srand(time(0));
+    
     double a[16];
     for (int i = 0; i < 16; i++)
     {
@@ -24,5 +26,8 @@ int main() {
     
     std::cout << m << std::endl;
     
+    m(1,1) = m(1,1) + 3;
+    
+    std::cout << m << std::endl;
     return 0;
 }
