@@ -14,20 +14,20 @@
 
 int main() {
     
-     srand(time(0));
+    mat4 m = identity();
     
-    double a[16];
-    for (int i = 0; i < 16; i++)
-    {
-        a[i] = rand() % 100;
-    }
+    vec3 scalor(2.0, 2.0, 2.0);
+    vec3 translator(1.0,2.0,3.0);
     
-    mat4 m(a);
+    m = m.scale(scalor);
+    m = m.translate(translator);
     
-    std::cout << m << std::endl;
-    
-    m(1,1) = m(1,1) + 3;
+    mat4 trans = transfact(m);
+    mat4 lin = linfact(m);
     
     std::cout << m << std::endl;
+    std::cout << trans << std::endl;
+    std::cout << lin << std::endl;
+    
     return 0;
 }

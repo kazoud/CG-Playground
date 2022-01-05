@@ -26,6 +26,17 @@ public:
         }
     }
     
+    mat4(double arr[4][4]) // Constructor #2
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+               m[i][j] = arr[i][j];
+            }
+        }
+    }
+    
     double& operator ()(int i, int j) // Indexing with parentheses
     {
         return m[i][j];
@@ -42,13 +53,22 @@ public:
         }
     }
     
-    mat4 translate(vec4 t)
+    mat4 scale(const vec3& s)
+    {
+        mat4 mat = *this;
+        mat.m[0][0] *= s.getX();
+        mat.m[1][1] *= s.getY();
+        mat.m[2][2] *= s.getZ();
+    
+        return mat;
+    }
+    
+    mat4 translate(const vec3& t)
     {
         mat4 mat = *this;
         mat.m[0][3] += t.getX();
         mat.m[1][3] += t.getY();
         mat.m[2][3] += t.getZ();
-        mat.m[3][3] += t.getW();
         
         return mat;
     }
@@ -56,6 +76,44 @@ public:
     friend std::ostream& operator <<(std::ostream& out, const mat4& m);
     
 };
+
+mat4 identity()
+{
+    double identity[4][4] = {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}};
+    return mat4(identity);
+}
+
+mat4 zeroes()
+{
+    double zeroes[4][4] = {0};
+    return mat4(zeroes);
+}
+
+mat4 transfact(mat4& m)
+{
+    mat4 trans = identity();
+    
+    for (int i = 0; i < 3; i++)
+    {
+        trans(i,3) = m(i,3);
+    }
+    
+    return trans;
+}
+
+mat4 linfact(mat4& m)
+{
+    mat4 lin = zeroes();
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            lin(i,j) = m(i,j);
+        }
+    }
+    lin(3,3) = 1;
+    return lin;
+}
 
 std::ostream& operator <<(std::ostream& out, const mat4& mat)
 {
