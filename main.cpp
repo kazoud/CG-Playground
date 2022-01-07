@@ -25,9 +25,12 @@ int main() {
     mat4 trans = transfact(m);
     mat4 lin = linfact(m);
     
+    mat4 m_again = trans*lin;
+    
     std::cout << m << std::endl;
     std::cout << trans << std::endl;
     std::cout << lin << std::endl;
+    std::cout << m_again << std::endl;
     
     return 0;
 }

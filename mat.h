@@ -73,6 +73,8 @@ public:
         return mat;
     }
     
+    mat4 operator*(mat4& mat) ;
+    
     friend std::ostream& operator <<(std::ostream& out, const mat4& m);
     
 };
@@ -137,6 +139,24 @@ std::ostream& operator <<(std::ostream& out, const mat4& mat)
         }
     }
     return out;
+}
+
+mat4 mat4::operator*(mat4& mat)
+{
+    mat4 product = zeroes();
+    
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            for (int k = 0; k < 4; k++)
+            {
+                product(i,j) += (*this)(i,k) * mat(k,j);
+            }
+        }
+    }
+    return product;
+    
 }
 
 #endif /* mat_h */
