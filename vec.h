@@ -132,6 +132,11 @@ public:
         return vec3(a*x, a*y, a*z);
     }
     
+    vec3 normalize()
+    {
+        return (*this) * (1/this->length()) ;
+    }
+    
     friend std::ostream& operator<<(std::ostream& out, vec3 vec) ;
     
 };
@@ -164,11 +169,18 @@ double angle(const vec3& a, const vec3& b)
 
 using point3 = vec3;
 
+vec3 operator-(const point3& p1, const point3& p2)
+{
+    return vec3(p1.getX()-p2.getX(), p1.getY()-p2.getY(), p1.getZ()-p2.getZ());
+}
+
 class vec4{
     double x,y,z,w;
     
 public:
     vec4(double a, double b, double c, double d) : x(a), y(b), z(c), w(d) {}
+    vec4(vec3 vec, double a) : x(vec.getX()), y(vec.getY()), z(vec.getZ()), w(a) {}
+    
     double getX() const
     {
         return x;

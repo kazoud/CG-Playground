@@ -32,5 +32,15 @@ int main() {
     std::cout << lin << std::endl;
     std::cout << m_again << std::endl;
     
+    // TODO : Test lookat
+    
+    point3 eye(3,3,3);
+    point3 direction(0,0,1);
+    vec3 up(0,1,0);
+    
+    mat4 mat = lookat(eye, direction, up);
+    std::cout << "--------" << std::endl;
+    std::cout << mat << std::endl;
+    
     return 0;
 }

@@ -37,9 +37,24 @@ public:
         }
     }
     
-    double& operator ()(int i, int j) // Indexing with parentheses
+    mat4(vec4 col1, vec4 col2, vec4 col3, vec4 col4) // Constructor #3 (Terrible)
     {
-        return m[i][j];
+        m[0][0] = col1.getX();
+        m[1][0] = col1.getY();
+        m[2][0] = col1.getZ();
+        m[3][0] = col1.getW();
+        m[0][1] = col2.getX();
+        m[1][1] = col2.getY();
+        m[2][1] = col2.getZ();
+        m[3][1] = col2.getW();
+        m[0][2] = col3.getX();
+        m[1][2] = col3.getY();
+        m[2][2] = col3.getZ();
+        m[3][2] = col3.getW();
+        m[0][3] = col4.getX();
+        m[1][3] = col4.getY();
+        m[2][3] = col4.getZ();
+        m[3][3] = col4.getW();
     }
     
     mat4(const mat4& mat) // Copy constructor
@@ -52,6 +67,12 @@ public:
             }
         }
     }
+    
+    double& operator ()(int i, int j) // Indexing with parentheses
+    {
+        return m[i][j];
+    }
+    
     
     mat4 scale(const vec3& s)
     {
@@ -115,6 +136,19 @@ mat4 linfact(mat4& m)
     }
     lin(3,3) = 1;
     return lin;
+}
+
+mat4 lookat(point3 eye, point3 direction, vec3 up)
+{
+    vec3 z = (direction-eye).normalize();
+    vec4 augmented_z(z, 0);
+    vec3 y = up.normalize();
+    vec4 augmented_y(y, 0);
+    vec3 x = cross(y,z);
+    vec4 augmented_x(x,0);
+    vec4 p(eye, 1);
+    
+    return mat4(augmented_x,augmented_y,augmented_z,p);
 }
 
 std::ostream& operator <<(std::ostream& out, const mat4& mat)
